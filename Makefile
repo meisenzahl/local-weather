@@ -4,7 +4,7 @@ CC       := gcc
 CFLAGS   := -std=c89 -Wall
 
 LINKER   := gcc -o
-LFLAGS   := -lcurl
+LFLAGS   := -lcurl -ljson
 
 # change these to set the proper directories where each files shoould be
 SRCDIR   := src
