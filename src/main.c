@@ -5,11 +5,12 @@
 int main(void)
 {
     size_t woeid = getWOEID();
+    printf("getWOEID(): %zd\n", woeid);
     if (woeid) {
         struct Weather weather = getWeather(woeid);
 
         printf("temperature: %zd°%s\n", weather.temp, weather.units.temperature);
-    }
+    } 
 
     return 0;
 }

@@ -25,7 +25,7 @@ size_t getWOEID()
     CURLcode res;
 
     const char URL[] = "https://weather.yahoo.com";
-    char woeid[10];
+    char woeid[32];
     size_t WOEID = 0;
 
     struct MemoryStruct chunk;
@@ -49,6 +49,9 @@ size_t getWOEID()
     /* we pass our 'chunk' struct to the callback function */
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *) &chunk);
 
+    /* set user-agent*/
+    curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+
     /* get it */
     res = curl_easy_perform(curl);
 
@@ -58,21 +61,26 @@ size_t getWOEID()
                 curl_easy_strerror(res));
     }
     else {
-        if ((long) chunk.size < 100000) {
-            return 0;
+        char *tmp;
+
+        tmp = strstr(chunk.memory, "woeId:");
+        if (tmp) {
+            strcpy(chunk.memory, tmp);
+            tmp = strstr(chunk.memory, " ");
+
+            if (tmp) {
+                strcpy(chunk.memory, tmp);
+                size_t length = strcspn(chunk.memory, ",") -1;
+
+                size_t i;
+                for (i = 0; i < length; i++) {
+                    woeid[i] = chunk.memory[i + 1];
+                }
+                woeid[length + 1] = '\0';
+
+                WOEID = atoi(woeid);
+            }
         }
-
-        strcpy(chunk.memory, strstr(chunk.memory, "woeId:"));
-        strcpy(chunk.memory, strstr(chunk.memory, " "));
-        size_t length = strcspn(chunk.memory, ",") - 1;
-
-        size_t i;
-        for (i = 0; i < length; i++) {
-            woeid[i] = chunk.memory[i + 1];
-        }
-        woeid[length + 1] = '\0';
-
-        WOEID = atoi(woeid);
     }
 
     /* cleanup curl stuff */
@@ -80,7 +88,7 @@ size_t getWOEID()
 
     /* always free up allocated memory */
     if (chunk.memory)
-        free(chunk.memory);
+        free(chunk.memory); 
 
     /* cleanup globally */
     curl_global_cleanup();
@@ -124,6 +132,9 @@ struct Weather getWeather(size_t woeid)
 
     /* we pass our 'chunk' struct to the callback function */
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *) &chunk);
+
+    /* set user-agent*/
+    curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 
     /* get it! */
     res = curl_easy_perform(curl);
