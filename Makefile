@@ -1,7 +1,7 @@
 TARGET   := local-weather
 
 CC       := gcc
-CFLAGS   := -std=c89 -Wall
+CFLAGS   := -std=c99 -Wall -Wextra -pedantic
 
 LINKER   := gcc -o
 LFLAGS   := -lcurl -ljson
