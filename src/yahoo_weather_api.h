@@ -69,6 +69,6 @@ size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *user
 
 size_t getWOEID();
 
-struct Weather getWeather(size_t woeid);
+struct Weather getWeather(size_t woeid, char* unit);
 
 #endif

@@ -96,7 +96,7 @@ size_t getWOEID()
     return WOEID;
 }
 
-struct Weather getWeather(size_t woeid)
+struct Weather getWeather(size_t woeid, char* unit)
 {
     struct Weather weather;
 
@@ -107,7 +107,9 @@ struct Weather getWeather(size_t woeid)
 
     char URL[200] = "https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20weather.forecast%20WHERE%20woeid%3D";
     strcat(URL, help);
-    strcat(URL, "%20AND%20u%3D'c'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+    strcat(URL, "%20AND%20u%3D'");
+    strcat(URL, unit);
+    strcat(URL, "'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
 
     CURL *curl;
     CURLcode res;

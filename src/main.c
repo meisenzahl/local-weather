@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
             size_t woeid = getWOEID();
 
             if (woeid) {
-                struct Weather weather = getWeather(woeid);
+                struct Weather weather = getWeather(woeid, "c");
 
                 printf("temperature: %zd°%s\n", weather.temp, weather.units.temperature);
             }
@@ -19,7 +19,16 @@ int main(int argc, char *argv[])
             }
         }
         else if (strcmp(argv[1], "us") == 0) {
-            /* TODO */
+            size_t woeid = getWOEID();
+
+            if (woeid) {
+                struct Weather weather = getWeather(woeid, "f");
+
+                printf("temperature: %zd°%s\n", weather.temp, weather.units.temperature);
+            }
+            else {
+                printf("Couldn't get woeid\n");
+            }
         }
     }
     
