@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     if (argc == 2) {
-        if (strcmp(argv[1], "metric") == 0) {
+        if ((strcmp(argv[1], "metric") == 0) || (strcmp(argv[1], "c") == 0)) {
             size_t woeid = getWOEID();
 
             if (woeid) {
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
                 printf("Couldn't get woeid\n");
             }
         }
-        else if (strcmp(argv[1], "us") == 0) {
+        else if ((strcmp(argv[1], "us") == 0) || (strcmp(argv[1], "f") == 0)) {
             size_t woeid = getWOEID();
 
             if (woeid) {
