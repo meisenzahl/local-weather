@@ -3,6 +3,8 @@
 
 #include "yahoo_weather_api.h"
 
+void usage();
+
 int main(int argc, char *argv[])
 {
     if (argc == 2) {
@@ -30,9 +32,24 @@ int main(int argc, char *argv[])
                 printf("Couldn't get woeid\n");
             }
         }
+        else {
+            usage();
+        }
+    }
+    else {
+        usage();
     }
     
     
 
     return 0;
+}
+
+void usage()
+{
+  printf("Usage: local-weather [OPTION]\n");
+  printf("       metric\n");
+  printf("       c\n");
+  printf("       us\n");
+  printf("       f\n");
 }
