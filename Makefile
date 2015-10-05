@@ -14,7 +14,7 @@ BINDIR   := bin
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-rm       := rm -f
+rm       := rm -rf
 
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
@@ -32,3 +32,7 @@ clean:
 .PHONEY: remove
 remove: clean
 	$(rm) $(BINDIR)/$(TARGET)
+
+.PHONEY: mrproper
+mrproper:
+	$(rm) $(BINDIR) $(OBJDIR)
