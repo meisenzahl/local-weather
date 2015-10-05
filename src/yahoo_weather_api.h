@@ -8,6 +8,58 @@
 #include <curl/curl.h>
 #include <json/json.h>
 
+char *conditions[] = {
+    "tornado",
+    "tropical storm",
+    "hurricane",
+    "severe thunderstorms",
+    "thunderstorms",
+    "mixed rain and snow",
+    "mixed rain and sleet",
+    "mixed snow and sleet",
+    "freezing drizzle",
+    "drizzle",
+    "freezing rain",
+    "showers",
+    "showers",
+    "snow flurries",
+    "light snow showers",
+    "blowing snow",
+    "snow",
+    "hail",
+    "sleet",
+    "dust",
+    "foggy",
+    "haze",
+    "smoky",
+    "blustery",
+    "windy",
+    "cold",
+    "cloudy",
+    "mostly cloudy (night)",
+    "mostly cloudy (day)",
+    "partly cloudy (night)",
+    "partly cloudy (day)",
+    "clear (night)",
+    "sunny",
+    "fair (night)",
+    "fair (day)",
+    "mixed rain and hail",
+    "hot",
+    "isolated thunderstorms",
+    "scattered thunderstorms",
+    "scattered thunderstorms",
+    "scattered showers",
+    "heavy snow",
+    "scattered snow showers",
+    "heavy snow",
+    "partly cloudy",
+    "thundershowers",
+    "snow showers",
+    "isolated thundershowers",
+    "not available"
+};
+
 struct Units {
     char distance[10];
     char pressure[10];
@@ -70,5 +122,7 @@ size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *user
 size_t getWOEID();
 
 struct Weather getWeather(size_t woeid, char* unit);
+
+void printForecast(size_t woeid, char* unit);
 
 #endif

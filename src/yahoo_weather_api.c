@@ -337,3 +337,92 @@ struct Weather getWeather(size_t woeid, char* unit)
 
     return weather;
 }
+
+void printForecast(size_t woeid, char* unit) {
+    struct Weather weather = getWeather(woeid, unit);
+
+    printf("location\n");
+    printf("woeid: %zd\n", weather.woeid);
+    printf("city: %s\n", weather.city);
+    printf("country: %s\n", weather.country);
+    printf("region: %s\n", weather.region);
+    printf("\n");
+
+    printf("wind\n");
+    printf("chill: %zd\n", weather.wind.chill);
+    printf("direction: %zd°\n", weather.wind.direction);
+    printf("speed: %.2f %s\n", weather.wind.speed, weather.units.speed);
+    printf("\n");
+
+    printf("atmosphere\n");
+    printf("humidity: %zd\n", weather.atmosphere.humidity);
+    printf("pressure: %.2f %s\n", weather.atmosphere.pressure, weather.units.pressure);
+    printf("rising: %zd\n", weather.atmosphere.rising);
+    printf("visibility: %zd\n", weather.atmosphere.visibility);
+    printf("\n");
+
+    printf("astronomy\n");
+    if (strcmp(unit, "c") == 0) {
+        printf("sunrise: ");
+        if (weather.astronomy.sunrise_hour < 10)
+            printf("0");
+        printf("%zd:", weather.astronomy.sunrise_hour);
+        if (weather.astronomy.sunrise_minute < 10)
+            printf("0");
+        printf("%zd\n", weather.astronomy.sunrise_minute);
+
+        printf("sunset: ");
+        if (weather.astronomy.sunset_hour < 10)
+            printf("0");
+        printf("%zd:", weather.astronomy.sunset_hour);
+        if (weather.astronomy.sunset_minute < 10)
+            printf("0");
+        printf("%zd\n", weather.astronomy.sunset_minute);
+    }
+    else if (strcmp(unit, "f") == 0) {
+        printf("sunrise: ");
+        if (weather.astronomy.sunrise_hour > 11) {
+            printf("%zd:", weather.astronomy.sunrise_hour - 12);
+            if (weather.astronomy.sunrise_minute < 10)
+                printf("0");
+            printf("%zd pm\n", weather.astronomy.sunrise_minute);
+        }
+        else {
+            printf("%zd:", weather.astronomy.sunrise_hour);
+            if (weather.astronomy.sunrise_minute < 10)
+                printf("0");
+            printf("%zd am\n", weather.astronomy.sunrise_minute);
+        }
+
+        printf("sunset: ");
+        if (weather.astronomy.sunset_hour > 11) {
+            printf("%zd:", weather.astronomy.sunset_hour - 12);
+            if (weather.astronomy.sunset_minute < 10)
+                printf("0");
+            printf("%zd pm\n", weather.astronomy.sunset_minute);
+        }
+        else {
+            printf("%zd:", weather.astronomy.sunset_hour);
+            if (weather.astronomy.sunset_minute < 10)
+                printf("0");
+            printf("%zd am\n", weather.astronomy.sunset_minute);
+        }
+    }
+    printf("\n");
+
+    printf("condition\n");
+    printf("code: %s\n", conditions[weather.code]);
+    printf("temperature: %zd°%s\n", weather.temp, weather.units.temperature);
+    printf("\n");
+
+    size_t i;
+    for (i = 0; i < 5; i++) {
+        printf("forecast %zd\n", i);
+        printf("code: %s\n", conditions[weather.temperature[i].code]);
+        printf("date: %s\n", weather.temperature[i].date);
+        printf("day: %s\n", weather.temperature[i].day);
+        printf("high: %zd°%s\n", weather.temperature[i].high, weather.units.temperature);
+        printf("low: %zd°%s\n", weather.temperature[i].low, weather.units.temperature);
+        printf("\n");
+    }
+}
