@@ -8,7 +8,7 @@
 #include <curl/curl.h>
 #include <json/json.h>
 
-char *conditions[] = {
+static const char *conditions[] = {
     "tornado",
     "tropical storm",
     "hurricane",

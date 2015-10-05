@@ -5,6 +5,8 @@
 
 void usage();
 
+void suppress_unused_variable_warning();
+
 int main(int argc, char *argv[])
 {
     if (argc >= 2) {
@@ -57,4 +59,9 @@ void usage()
     printf("       -c, --metric           show units in metric\n");
     printf("       -f, --us               show units in us format\n");
     printf("       -w, --woeid <woeid>    use this woeid\n");
+}
+
+void suppress_unused_variable_warning()
+{
+    conditions[0] = NULL;
 }
